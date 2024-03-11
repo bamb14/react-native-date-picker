@@ -163,36 +163,44 @@ const DateBlock: React.FC<DateBlockProps> = ({
                 onMomentumScrollEnd={handleMomentumScrollEnd}
             >
                 {digits.map((value: number, index: number) => {
-                    return (
-                        <TouchableOpacity
-                            key={index}
-                            onPress={() => {
-                                onChange(type, digits[index])
-                                snapScrollToIndex(index)
-                            }}
-                        >
-                            <Text
-                                style={[
-                                    styles.digit,
-                                    {
-                                        fontSize: fontSize || 22,
-                                        color: textColor || "#000000",
-                                        marginBottom: (index === digits.length - 1)
-                                            ? height / 2 - dHeight / 2
-                                            : 0,
-                                        marginTop: (index === 0)
-                                            ? height / 2 - dHeight / 2
-                                            : 0,
-                                        lineHeight: dHeight,
-                                        height: dHeight,
-                                    }
-                                ]}
-                            >
-                                {value}
-                            </Text>
-                        </TouchableOpacity>
-                    )
-                })}
+            let formattedValue = value.toString();
+            if (type === "year") {
+                formattedValue += "년";
+            } else if (type === "month") {
+                formattedValue += "월";
+            } else if (type === "day") {
+                formattedValue += "일";
+            }
+            return (
+                <TouchableOpacity
+                    key={index}
+                    onPress={() => {
+                        onChange(type, digits[index])
+                        snapScrollToIndex(index)
+                    }}
+                >
+                    <Text
+                        style={[
+                            styles.digit,
+                            {
+                                fontSize: fontSize || 22,
+                                color: textColor || "#000000",
+                                marginBottom: (index === digits.length - 1)
+                                    ? height / 2 - dHeight / 2
+                                    : 0,
+                                marginTop: (index === 0)
+                                    ? height / 2 - dHeight / 2
+                                    : 0,
+                                lineHeight: dHeight,
+                                height: dHeight,
+                            }
+                        ]}
+                    >
+                        {formattedValue}
+                    </Text>
+                </TouchableOpacity>
+            )
+        })}
             </ScrollView>
             <LinearGradient
                 style={[styles.gradient, {bottom: 0, height: height / 4}]}
